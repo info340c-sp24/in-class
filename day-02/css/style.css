@@ -1,1 +1,23 @@
-/* we'll add some basic style here */
+html {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    color: blue;
+}
+
+header {
+    color: red;       
+}
+
+#paragraph {
+    font-size: 20px;
+}
+
+.paragraph-2 {
+    font-size: 5px;
+}
+
+a:hover {
+    background-color: brown;
+}
