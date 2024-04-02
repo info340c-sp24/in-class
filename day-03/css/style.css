@@ -16,12 +16,12 @@ h1 {
 } /* applied to the element with `id="zen-intro"` */
 
 /* group selector */
-.explanation .participation .benefits .requirements { 
+.explanation, .participation, .benefits, .requirements { 
 
 } /* applied to ANY .explanation OR .participation OR .benefits OR .requirements */
 
 /* combined selector */
-h3 .select { 
+h3.select { 
 
 } /* applied to ONLY combination of <h3> AND .select */
 
@@ -31,32 +31,32 @@ nav li {
 } /* applied ONLY to <li> INSIDE of <nav>
 
 /* child selector */
-div ul { 
+div > ul { 
 
 } /* applied to <ul> DIRECTLY INSIDE of <div>
 
 /* Immediately following selector */
-header div { 
+header + div { 
 
 } /* applied to every element immediately after the first element */
 
 /* Preceded by selector */
-header div { 
+header ~ div { 
 
 } /* applied to every element immediately preceded by the first element */
 
 /* Attribute selector */
-role { 
+[role] { 
 
 } /* applied to every element with role attribute */
 
 /* Attribute value selector */
-role article { 
+[role=article] { 
 
 } /* applied to every element with the value of article for the role attribute */
 
 /* Not selector */
-not p { 
+not(p) { 
 
 } /* applied to all elements that are not the indicated element */
 
@@ -103,9 +103,9 @@ p:first-of-type::first-letter {
 are the first of type <p> in their parent */
 
 /* pseudo-element selector */
-h1::after {
+h2::after {
 
-} /* applied before ANY <h2> element */ `
+} /* applied after ANY <h2> element */ `
 
 /* Pseudo-element selector */
 ::selection {
