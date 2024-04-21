@@ -1,5 +1,5 @@
-# jQuery
+# ES-6 Activity
 
-Practice creating and manipulating elements using jQuery. The final page will look like this:
+In this activity, you'll practice working with ES6 features, namely **arrow functions** and **Classes**. Make sure you're familiar with the corresponding [book chapters](https://info343.github.io/es6.html). You'll use these skills to build this (interactive!) webpage:
 
-![page after being manipulated by jquery](imgs/complete.png)
+![collection of puppy pictures](imgs/complete.png)
