@@ -81,7 +81,8 @@ const SearchApp = (props) => {
     // Return a `div` containing a  `UserInput` component and a `Table` component
     return (
         <div>
-          <UserInput update={handleChange}/>
+          <UserInput update={handleChange} />
+          <Table data={employees} />
         </div>
     )
 }
