@@ -11,12 +11,25 @@ import {
 } from 'reactstrap';
 
 //Import needed auth functions: getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut 
-
+import { initializeApp } from "firebase/app";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  updateProfile, 
+  onAuthStateChanged, 
+  signOut 
+} from 'firebase/auth';
 
 function App() {
   // Set initial state using useState (user, email, password, username, errorMessage)
+  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   // Initialize Firebase app with the provided configuration
-
+  const auth = getAuth();
 
 
   useEffect(() => {
@@ -24,10 +37,13 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
         // If there is a user, set the state of `user`, and set state of email, password and errormessage to blank
         if (user) {
-        
+          setUser(user);
+          setEmail('');
+          setPassword('');
+          setErrorMessage('');
         //otherwise user is null
         } else {
-
+          setUser(null);
         }
     });
     // Clean up the subscription on component unmount
@@ -38,17 +54,26 @@ function App() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     // Use separate state setters for each field
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    } else if (name === 'username') {
+      setUsername(value);
+    }
   };
 
   // Method for handling someone signing up 
   const handleSignUp = async () => {
       try {
           // Create a new user and save their information
-
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             // THEN update the display name of the user. Be sure to reset the form field to blank
-
+          await updateProfile(userCredential.user, { displayName: username });
+          setUsername('');
           // Set the state as the current (firebase) user
-
+          setUser(userCredential.user);
+          console.log(user)
         } catch (error) {
           setErrorMessage(error.message);
       }
@@ -57,7 +82,9 @@ function App() {
   // Method for handling someone signing in
   const handleSignIn = async () => {
       try {
-          // Sign in the user
+        // Sign in the user
+        await signInWithEmailAndPassword(auth, email, password);
+        console.log(user);
 
       } catch (error) {
           setErrorMessage(error.message);
@@ -68,13 +95,17 @@ function App() {
   const handleSignOut = async () => {
       try {
           // Sign out the user. Reset the form to blank
-
+        await signOut(auth);
+        setEmail('');
+        setPassword('');
+        setUsername('');
 
         } catch (error) {
           setErrorMessage(error.message);
       }
   };
   // set welcomeDiv to a sign up/sign in message if no user, otherwise display a message for the user
+  const welcomeDiv = user === null ? <h1>Sign in or Sign-up below!</h1> : <Alert color="info">Hello, {user.displayName}</Alert>;
 
   // set up an ErrorDiv for any errors coming back from the the auth calls
   const errorDiv = errorMessage === "" ? "" : <Alert color='danger'>Error: {errorMessage}</Alert>;
